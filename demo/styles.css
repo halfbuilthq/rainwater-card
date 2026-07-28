@@ -1,0 +1,58 @@
+:root {
+  color-scheme: light dark;
+  font-family:
+    Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --primary-text-color: #18232d;
+  --secondary-text-color: #677584;
+  --card-background-color: #ffffff;
+  --ha-card-background: #ffffff;
+  --divider-color: #e4e9ed;
+  --warning-color: #e99a00;
+  --error-color: #d23b3b;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background:
+    radial-gradient(circle at 18% 10%, rgba(69, 198, 217, 0.18), transparent 30%),
+    linear-gradient(145deg, #e9eff4, #dce6ec);
+}
+
+.stage {
+  display: grid;
+  min-height: 100vh;
+  padding: 28px 16px;
+  place-items: center;
+}
+
+rainwater-card {
+  width: min(100%, 580px);
+}
+
+ha-card {
+  display: block;
+  border: 1px solid rgba(28, 59, 78, 0.12);
+  border-radius: 26px;
+  box-shadow: 0 24px 65px rgba(25, 54, 72, 0.2);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary-text-color: #f0f5f8;
+    --secondary-text-color: #aab5bd;
+    --card-background-color: #1c2226;
+    --ha-card-background: #1c2226;
+    --divider-color: #313a40;
+  }
+
+  body {
+    background:
+      radial-gradient(circle at 18% 10%, rgba(36, 157, 190, 0.2), transparent 34%),
+      linear-gradient(145deg, #182127, #101519);
+  }
+}
