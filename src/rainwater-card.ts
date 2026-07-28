@@ -114,10 +114,8 @@ export class RainwaterCard extends LitElement {
 
   getGridOptions() {
     return {
-      rows: this._config?.show_history === false ? 6 : 9,
-      columns: 8,
-      min_rows: 5,
-      min_columns: 5
+      columns: 12,
+      min_columns: 6
     };
   }
 

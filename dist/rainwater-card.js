@@ -248,9 +248,9 @@ let A = class extends HTMLElement {
   }
 };
 A.elementStyles = [], A.shadowRootOptions = { mode: "open" }, A[M("elementProperties")] = /* @__PURE__ */ new Map(), A[M("finalized")] = /* @__PURE__ */ new Map(), Ut?.({ ReactiveElement: A }), (z.reactiveElementVersions ??= []).push("2.1.2");
-const W = globalThis, tt = (i) => i, O = W.trustedTypes, et = O ? O.createPolicy("lit-html", { createHTML: (i) => i }) : void 0, ut = "$lit$", v = `lit$${Math.random().toFixed(9).slice(2)}$`, ft = "?" + v, Ot = `<${ft}>`, w = document, H = () => w.createComment(""), T = (i) => i === null || typeof i != "object" && typeof i != "function", G = Array.isArray, Rt = (i) => G(i) || typeof i?.[Symbol.iterator] == "function", I = `[ 	
+const W = globalThis, tt = (i) => i, O = W.trustedTypes, et = O ? O.createPolicy("lit-html", { createHTML: (i) => i }) : void 0, ut = "$lit$", v = `lit$${Math.random().toFixed(9).slice(2)}$`, mt = "?" + v, Ot = `<${mt}>`, w = document, H = () => w.createComment(""), T = (i) => i === null || typeof i != "object" && typeof i != "function", G = Array.isArray, Rt = (i) => G(i) || typeof i?.[Symbol.iterator] == "function", I = `[ 	
 \f\r]`, k = /<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g, rt = /-->/g, it = />/g, $ = RegExp(`>|${I}(?:([^\\s"'>=/]+)(${I}*=${I}*(?:[^ 	
-\f\r"'\`<>=]|("|')|))|$)`, "g"), st = /'/g, ot = /"/g, mt = /^(?:script|style|textarea|title)$/i, gt = (i) => (t, ...e) => ({ _$litType$: i, strings: t, values: e }), C = gt(1), nt = gt(2), E = /* @__PURE__ */ Symbol.for("lit-noChange"), p = /* @__PURE__ */ Symbol.for("lit-nothing"), at = /* @__PURE__ */ new WeakMap(), x = w.createTreeWalker(w, 129);
+\f\r"'\`<>=]|("|')|))|$)`, "g"), st = /'/g, ot = /"/g, ft = /^(?:script|style|textarea|title)$/i, gt = (i) => (t, ...e) => ({ _$litType$: i, strings: t, values: e }), C = gt(1), nt = gt(2), E = /* @__PURE__ */ Symbol.for("lit-noChange"), p = /* @__PURE__ */ Symbol.for("lit-nothing"), at = /* @__PURE__ */ new WeakMap(), x = w.createTreeWalker(w, 129);
 function vt(i, t) {
   if (!G(i) || !i.hasOwnProperty("raw")) throw Error("invalid template strings array");
   return et !== void 0 ? et.createHTML(t) : t;
@@ -261,9 +261,9 @@ const zt = (i, t) => {
   for (let c = 0; c < e; c++) {
     const a = i[c];
     let h, d, l = -1, u = 0;
-    for (; u < a.length && (n.lastIndex = u, d = n.exec(a), d !== null); ) u = n.lastIndex, n === k ? d[1] === "!--" ? n = rt : d[1] !== void 0 ? n = it : d[2] !== void 0 ? (mt.test(d[2]) && (s = RegExp("</" + d[2], "g")), n = $) : d[3] !== void 0 && (n = $) : n === $ ? d[0] === ">" ? (n = s ?? k, l = -1) : d[1] === void 0 ? l = -2 : (l = n.lastIndex - d[2].length, h = d[1], n = d[3] === void 0 ? $ : d[3] === '"' ? ot : st) : n === ot || n === st ? n = $ : n === rt || n === it ? n = k : (n = $, s = void 0);
-    const f = n === $ && i[c + 1].startsWith("/>") ? " " : "";
-    o += n === k ? a + Ot : l >= 0 ? (r.push(h), a.slice(0, l) + ut + a.slice(l) + v + f) : a + v + (l === -2 ? c : f);
+    for (; u < a.length && (n.lastIndex = u, d = n.exec(a), d !== null); ) u = n.lastIndex, n === k ? d[1] === "!--" ? n = rt : d[1] !== void 0 ? n = it : d[2] !== void 0 ? (ft.test(d[2]) && (s = RegExp("</" + d[2], "g")), n = $) : d[3] !== void 0 && (n = $) : n === $ ? d[0] === ">" ? (n = s ?? k, l = -1) : d[1] === void 0 ? l = -2 : (l = n.lastIndex - d[2].length, h = d[1], n = d[3] === void 0 ? $ : d[3] === '"' ? ot : st) : n === ot || n === st ? n = $ : n === rt || n === it ? n = k : (n = $, s = void 0);
+    const m = n === $ && i[c + 1].startsWith("/>") ? " " : "";
+    o += n === k ? a + Ot : l >= 0 ? (r.push(h), a.slice(0, l) + ut + a.slice(l) + v + m) : a + v + (l === -2 ? c : m);
   }
   return [vt(i, o + (i[e] || "<?>") + (t === 2 ? "</svg>" : t === 3 ? "</math>" : "")), r];
 };
@@ -280,18 +280,18 @@ class L {
     for (; (s = x.nextNode()) !== null && a.length < c; ) {
       if (s.nodeType === 1) {
         if (s.hasAttributes()) for (const l of s.getAttributeNames()) if (l.endsWith(ut)) {
-          const u = d[n++], f = s.getAttribute(l).split(v), m = /([.?@])?(.*)/.exec(u);
-          a.push({ type: 1, index: o, name: m[2], strings: f, ctor: m[1] === "." ? It : m[1] === "?" ? Ft : m[1] === "@" ? qt : D }), s.removeAttribute(l);
+          const u = d[n++], m = s.getAttribute(l).split(v), f = /([.?@])?(.*)/.exec(u);
+          a.push({ type: 1, index: o, name: f[2], strings: m, ctor: f[1] === "." ? It : f[1] === "?" ? Ft : f[1] === "@" ? qt : D }), s.removeAttribute(l);
         } else l.startsWith(v) && (a.push({ type: 6, index: o }), s.removeAttribute(l));
-        if (mt.test(s.tagName)) {
+        if (ft.test(s.tagName)) {
           const l = s.textContent.split(v), u = l.length - 1;
           if (u > 0) {
             s.textContent = O ? O.emptyScript : "";
-            for (let f = 0; f < u; f++) s.append(l[f], H()), x.nextNode(), a.push({ type: 2, index: ++o });
+            for (let m = 0; m < u; m++) s.append(l[m], H()), x.nextNode(), a.push({ type: 2, index: ++o });
             s.append(l[u], H());
           }
         }
-      } else if (s.nodeType === 8) if (s.data === ft) a.push({ type: 2, index: o });
+      } else if (s.nodeType === 8) if (s.data === mt) a.push({ type: 2, index: o });
       else {
         let l = -1;
         for (; (l = s.data.indexOf(v, l + 1)) !== -1; ) a.push({ type: 7, index: o }), l += v.length - 1;
@@ -1195,10 +1195,8 @@ const R = class R extends P {
   }
   getGridOptions() {
     return {
-      rows: this._config?.show_history === !1 ? 6 : 9,
-      columns: 8,
-      min_rows: 5,
-      min_columns: 5
+      columns: 12,
+      min_columns: 6
     };
   }
   updated(t) {
@@ -1231,9 +1229,9 @@ const R = class R extends P {
     );
   }
   _renderChart(t) {
-    const e = t.map((f) => f.volume), r = Math.min(...e), s = Math.max(...e), o = Math.max(100, (s - r) * 0.16), n = Math.max(0, r - o), c = Math.max(n + 1, s + o), a = c - n, h = t.map((f, m) => [
-      m / Math.max(1, t.length - 1) * b,
-      4 + (c - f.volume) / a * (_ - 8)
+    const e = t.map((m) => m.volume), r = Math.min(...e), s = Math.max(...e), o = Math.max(100, (s - r) * 0.16), n = Math.max(0, r - o), c = Math.max(n + 1, s + o), a = c - n, h = t.map((m, f) => [
+      f / Math.max(1, t.length - 1) * b,
+      4 + (c - m.volume) / a * (_ - 8)
     ]), d = ne(h), l = h.length ? `${d} L ${b} ${_} L 0 ${_} Z` : "", u = h.at(-1) ?? [b, _];
     return C`
       <div class="chart-wrap">
@@ -1249,13 +1247,13 @@ const R = class R extends P {
               <stop offset="100%" stop-color="var(--rainwater-blue)" stop-opacity="0.02"></stop>
             </linearGradient>
           </defs>
-          ${[0, 1, 2, 3].map((f) => {
-      const m = f / 3 * _;
-      return nt`<line class="grid-line" x1="0" y1=${m} x2=${b} y2=${m}></line>`;
+          ${[0, 1, 2, 3].map((m) => {
+      const f = m / 3 * _;
+      return nt`<line class="grid-line" x1="0" y1=${f} x2=${b} y2=${f}></line>`;
     })}
-          ${[0, 1, 2, 3, 4].map((f) => {
-      const m = f / 4 * b;
-      return nt`<line class="grid-line" x1=${m} y1="0" x2=${m} y2=${_}></line>`;
+          ${[0, 1, 2, 3, 4].map((m) => {
+      const f = m / 4 * b;
+      return nt`<line class="grid-line" x1=${f} y1="0" x2=${f} y2=${_}></line>`;
     })}
           <path class="area" d=${l}></path>
           <path class="line" d=${d}></path>
@@ -1267,7 +1265,7 @@ const R = class R extends P {
   render() {
     const t = this._config;
     if (!t) return p;
-    const e = this.hass?.locale?.language ?? this.hass?.language, r = _t(te(this.hass, t.entity)), s = t.capacity !== void 0 && t.capacity > 0 ? t.capacity : void 0, o = Math.max(0, Math.min(t.reserve ?? 0, s ?? 1 / 0)), n = r !== void 0 && s !== void 0 ? F(r / s * 100, 0, 100) : void 0, c = n ?? 0, a = le(r, n), h = r !== void 0 ? Math.max(0, r - o) : void 0, d = r !== void 0 && s !== void 0 ? Math.max(0, s - r) : void 0, l = F(t.history_days ?? 7, 1, 30), u = this._history.length > 1 ? this._history : ae(r ?? 0, l), f = Date.now() - 1440 * 60 * 1e3, m = [...u].reverse().find((wt) => wt.timestamp <= f) ?? u[0], y = r !== void 0 && this._history.length > 1 && m ? r - m.volume : void 0, bt = new Intl.DateTimeFormat(e, {
+    const e = this.hass?.locale?.language ?? this.hass?.language, r = _t(te(this.hass, t.entity)), s = t.capacity !== void 0 && t.capacity > 0 ? t.capacity : void 0, o = Math.max(0, Math.min(t.reserve ?? 0, s ?? 1 / 0)), n = r !== void 0 && s !== void 0 ? F(r / s * 100, 0, 100) : void 0, c = n ?? 0, a = le(r, n), h = r !== void 0 ? Math.max(0, r - o) : void 0, d = r !== void 0 && s !== void 0 ? Math.max(0, s - r) : void 0, l = F(t.history_days ?? 7, 1, 30), u = this._history.length > 1 ? this._history : ae(r ?? 0, l), m = Date.now() - 1440 * 60 * 1e3, f = [...u].reverse().find((wt) => wt.timestamp <= m) ?? u[0], y = r !== void 0 && this._history.length > 1 && f ? r - f.volume : void 0, bt = new Intl.DateTimeFormat(e, {
       month: "short",
       day: "numeric"
     }), Z = u[0]?.timestamp, xt = r === void 0 ? "Stored water sensor is unavailable" : s === void 0 ? "Add total capacity to enable fill level and headroom" : r <= o ? "Protected reserve is currently in use" : y !== void 0 && y > 10 ? `Storage increased by ${g(y, e)} in 24 hours` : y !== void 0 && y < -10 ? `${g(Math.abs(y), e)} used in the past 24 hours` : "Stored rainwater level is steady";
