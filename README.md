@@ -3,6 +3,8 @@
 A single-reservoir dashboard card for total stored rainwater, usable reserve,
 remaining capacity, daily change, and volume history.
 
+![Rainwater Card preview](docs/rainwater-card-preview.svg)
+
 ## Features
 
 - One required total-volume entity
