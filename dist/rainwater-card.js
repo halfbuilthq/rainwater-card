@@ -1196,7 +1196,7 @@ const R = class R extends P {
   getGridOptions() {
     return {
       columns: 12,
-      min_columns: 6
+      min_columns: 3
     };
   }
   updated(t) {
