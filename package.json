@@ -1,12 +1,27 @@
 {
   "name": "rainwater-card",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A single-reservoir rainwater storage card for Home Assistant.",
+  "keywords": [
+    "hacs",
+    "home-assistant",
+    "lovelace",
+    "rainwater",
+    "water-tank"
+  ],
   "license": "MIT",
+  "homepage": "https://github.com/halfbuilthq/rainwater-card#readme",
+  "bugs": {
+    "url": "https://github.com/halfbuilthq/rainwater-card/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/halfbuilthq/rainwater-card.git"
+  },
   "type": "module",
   "main": "dist/rainwater-card.js",
   "files": [
-    "dist",
+    "dist/rainwater-card.js",
     "README.md",
     "hacs.json"
   ],
@@ -26,6 +41,6 @@
     "vitest": "^3.2.4"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=20.19"
   }
 }
