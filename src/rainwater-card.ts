@@ -6,6 +6,11 @@ import {
   normalizeConfig,
   validateConfig
 } from "./config";
+import {
+  chartPositionPercent,
+  chartTooltipPosition,
+  nearestChartPointIndex
+} from "./chart";
 import { fetchVolumeHistory } from "./history";
 import { cardStyles } from "./styles";
 import type {
@@ -23,6 +28,7 @@ import {
 const CHART_WIDTH = 480;
 const CHART_HEIGHT = 126;
 const HISTORY_REFRESH_MS = 10 * 60 * 1000;
+type ChartPointer = ReturnType<typeof chartTooltipPosition>;
 
 type Status = "healthy" | "low" | "critical" | "full" | "monitoring" | "unavailable";
 
@@ -82,7 +88,9 @@ export class RainwaterCard extends LitElement {
     _config: { state: true },
     _history: { state: true },
     _historyLoading: { state: true },
-    _historyFailed: { state: true }
+    _historyFailed: { state: true },
+    _activeChartIndex: { state: true },
+    _chartPointer: { state: true }
   };
 
   static styles = cardStyles;
@@ -92,6 +100,8 @@ export class RainwaterCard extends LitElement {
   private _history: HistoryPoint[] = [];
   private _historyLoading = false;
   private _historyFailed = false;
+  private _activeChartIndex?: number;
+  private _chartPointer?: ChartPointer;
   private _lastHistoryKey = "";
   private _lastHistoryFetch = 0;
 
@@ -166,7 +176,51 @@ export class RainwaterCard extends LitElement {
     );
   }
 
-  private _renderChart(points: HistoryPoint[]) {
+  private _inspectChart(event: PointerEvent, pointCount: number): void {
+    const bounds = (event.currentTarget as HTMLElement).getBoundingClientRect();
+    this._chartPointer = chartTooltipPosition(
+      event.clientX - bounds.left,
+      event.clientY - bounds.top,
+      bounds.width,
+      bounds.height
+    );
+    const index = nearestChartPointIndex(
+      event.clientX,
+      bounds.left,
+      bounds.width,
+      pointCount
+    );
+    if (index !== this._activeChartIndex) this._activeChartIndex = index;
+  }
+
+  private _leaveChart(event: PointerEvent): void {
+    if (event.pointerType === "mouse") this._clearChartInspection();
+  }
+
+  private _clearChartInspection(): void {
+    this._activeChartIndex = undefined;
+    this._chartPointer = undefined;
+  }
+
+  private _navigateChart(event: KeyboardEvent, pointCount: number): void {
+    this._chartPointer = undefined;
+    if (event.key === "Escape") {
+      this._activeChartIndex = undefined;
+      return;
+    }
+    if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+
+    event.preventDefault();
+    const current = this._activeChartIndex ?? pointCount - 1;
+    this._activeChartIndex =
+      event.key === "Home"
+        ? 0
+        : event.key === "End"
+          ? pointCount - 1
+          : clamp(current + (event.key === "ArrowLeft" ? -1 : 1), 0, pointCount - 1);
+  }
+
+  private _renderChart(points: HistoryPoint[], locale: string | undefined) {
     const values = points.map((point) => point.volume);
     const rawMin = Math.min(...values);
     const rawMax = Math.max(...values);
@@ -183,9 +237,48 @@ export class RainwaterCard extends LitElement {
       ? `${linePath} L ${CHART_WIDTH} ${CHART_HEIGHT} L 0 ${CHART_HEIGHT} Z`
       : "";
     const end = coordinates.at(-1) ?? [CHART_WIDTH, CHART_HEIGHT];
+    const activeIndex =
+      this._activeChartIndex === undefined
+        ? undefined
+        : clamp(this._activeChartIndex, 0, points.length - 1);
+    const activePoint =
+      activeIndex === undefined ? undefined : points[activeIndex];
+    const activeCoordinate =
+      activeIndex === undefined ? undefined : coordinates[activeIndex];
+    const activePosition =
+      activeIndex === undefined
+        ? undefined
+        : chartPositionPercent(activeIndex, points.length);
+    const tooltipPlacement =
+      this._chartPointer?.placement ??
+      (activePosition !== undefined && activePosition > 64
+        ? "place-left"
+        : "place-right");
+    const tooltipStyle = this._chartPointer
+      ? `left: ${this._chartPointer.x}px; top: ${this._chartPointer.top}px`
+      : `left: ${activePosition ?? 0}%`;
+    const tooltipTime = activePoint
+      ? new Intl.DateTimeFormat(locale, {
+          month: "short",
+          day: "numeric",
+          hour: "numeric",
+          minute: "2-digit"
+        }).format(activePoint.timestamp)
+      : "";
 
     return html`
-      <div class="chart-wrap">
+      <div
+        class="chart-wrap"
+        role="group"
+        tabindex="0"
+        aria-label="Inspect stored rainwater volume history"
+        @pointerdown=${(event: PointerEvent) => this._inspectChart(event, points.length)}
+        @pointermove=${(event: PointerEvent) => this._inspectChart(event, points.length)}
+        @pointerleave=${this._leaveChart}
+        @pointercancel=${this._clearChartInspection}
+        @keydown=${(event: KeyboardEvent) => this._navigateChart(event, points.length)}
+        @blur=${this._clearChartInspection}
+      >
         <svg
           viewBox="0 0 ${CHART_WIDTH} ${CHART_HEIGHT}"
           role="img"
@@ -209,7 +302,39 @@ export class RainwaterCard extends LitElement {
           <path class="area" d=${areaPath}></path>
           <path class="line" d=${linePath}></path>
           <circle class="end-dot" cx=${end[0]} cy=${end[1]} r="5"></circle>
+          ${activeCoordinate
+            ? svg`
+                <line
+                  class="inspection-line"
+                  x1=${activeCoordinate[0]}
+                  y1="0"
+                  x2=${activeCoordinate[0]}
+                  y2=${CHART_HEIGHT}
+                ></line>
+                <circle
+                  class="inspection-dot"
+                  cx=${activeCoordinate[0]}
+                  cy=${activeCoordinate[1]}
+                  r="5"
+                ></circle>
+              `
+            : nothing}
         </svg>
+        ${activePoint && activePosition !== undefined
+          ? html`
+              <div
+                class="chart-tooltip ${tooltipPlacement}"
+                style=${tooltipStyle}
+                aria-live="polite"
+              >
+                <time>${tooltipTime}</time>
+                <div class="tooltip-item">
+                  <span><i></i>Stored water</span>
+                  <strong>${formatVolume(activePoint.volume, locale)}</strong>
+                </div>
+              </div>
+            `
+          : nothing}
       </div>
     `;
   }
@@ -342,7 +467,7 @@ export class RainwaterCard extends LitElement {
                     <h2>Stored water · ${days} ${days === 1 ? "day" : "days"}</h2>
                     <span>${formatVolume(current, locale)}</span>
                   </div>
-                  ${this._renderChart(chartPoints)}
+                  ${this._renderChart(chartPoints, locale)}
                   <div class="chart-axis">
                     <span>${firstTime ? formatter.format(firstTime) : ""}</span>
                     <span>Now</span>

@@ -158,7 +158,11 @@ export const cardStyles = css`
         transparent 30% 70%,
         color-mix(in srgb, var(--primary-text-color, #17212b) 5%, transparent)
       ),
-      color-mix(in srgb, var(--card-background-color, #fff) 72%, transparent);
+      color-mix(
+        in srgb,
+        var(--ha-card-background, var(--card-background-color, #fff)) 72%,
+        transparent
+      );
     box-shadow:
       inset 0 0 0 1px color-mix(in srgb, white 55%, transparent),
       0 18px 34px color-mix(in srgb, var(--rainwater-deep) 15%, transparent);
@@ -334,8 +338,18 @@ export const cardStyles = css`
   }
 
   .chart-wrap {
+    position: relative;
     height: 128px;
     margin-top: 12px;
+    border-radius: 5px;
+    outline: none;
+    touch-action: pan-y;
+    user-select: none;
+  }
+
+  .chart-wrap:focus-visible {
+    outline: 2px solid var(--rainwater-blue);
+    outline-offset: 3px;
   }
 
   .chart-wrap svg {
@@ -343,6 +357,7 @@ export const cardStyles = css`
     width: 100%;
     height: 100%;
     overflow: visible;
+    pointer-events: none;
   }
 
   .grid-line {
@@ -369,6 +384,87 @@ export const cardStyles = css`
     stroke: var(--ha-card-background, var(--card-background-color, #fff));
     stroke-width: 2.5;
     vector-effect: non-scaling-stroke;
+  }
+
+  .inspection-line {
+    stroke: var(--primary-text-color, #17212b);
+    stroke-dasharray: 3 4;
+    stroke-opacity: 0.42;
+    stroke-width: 1.5;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .inspection-dot {
+    fill: var(--rainwater-aqua);
+    stroke: var(--ha-card-background, var(--card-background-color, #fff));
+    stroke-width: 2.5;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .chart-tooltip {
+    position: absolute;
+    z-index: 3;
+    width: 154px;
+    padding: 9px 10px;
+    border: 1px solid
+      color-mix(in srgb, var(--primary-text-color, #17212b) 14%, transparent);
+    border-radius: 10px;
+    color: var(--primary-text-color, #17212b);
+    background: color-mix(
+      in srgb,
+      var(--ha-card-background, var(--card-background-color, #fff)) 95%,
+      transparent
+    );
+    box-shadow: 0 7px 22px rgba(18, 26, 42, 0.18);
+    pointer-events: none;
+    backdrop-filter: blur(8px);
+  }
+
+  .chart-tooltip.place-right {
+    margin-left: 14px;
+  }
+
+  .chart-tooltip.place-left {
+    margin-left: -14px;
+    transform: translateX(-100%);
+  }
+
+  .chart-tooltip time {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--secondary-text-color, #657181);
+    font-size: 10px;
+    font-weight: 700;
+  }
+
+  .tooltip-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 9px;
+    font-size: 11px;
+  }
+
+  .tooltip-item span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--rainwater-blue);
+    font-weight: 700;
+  }
+
+  .tooltip-item i {
+    width: 7px;
+    height: 7px;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  .tooltip-item strong {
+    color: var(--primary-text-color, #17212b);
+    font-size: 11px;
+    white-space: nowrap;
   }
 
   .chart-axis {

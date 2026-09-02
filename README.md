@@ -13,6 +13,7 @@ remaining capacity, daily change, and volume history.
 - Available water and remaining headroom
 - 24-hour volume change
 - Home Assistant history over 1–30 days
+- Mouse, touch and keyboard chart inspection with point-in-time tooltips
 - Native Home Assistant visual configuration
 - Responsive light and dark themes
 - HACS-compatible packaging

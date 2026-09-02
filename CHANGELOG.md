@@ -5,6 +5,19 @@ Semantic Versioning.
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-09-02
+
+### Added
+
+- Mouse, touch, and keyboard inspection for stored-water history.
+- Point-in-time tooltips and accessible chart navigation.
+
+### Changed
+
+- Standardized card, chart, and tooltip backgrounds on Home Assistant's
+  current theme variables with legacy fallbacks.
+- Clear chart inspection when a touch gesture is cancelled by scrolling.
+
 ## [0.1.1] - 2026-09-02
 
 ### Added
@@ -15,4 +28,3 @@ Semantic Versioning.
 ## [0.1.0] - 2026-07-29
 
 - Initial public release of the Rainwater Card.
-
