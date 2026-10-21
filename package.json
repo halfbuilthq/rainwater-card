@@ -1,7 +1,7 @@
 {
   "name": "rainwater-card",
   "version": "0.1.2",
-  "description": "A single-reservoir rainwater storage card for Home Assistant.",
+  "description": "Rainwater storage, usable reserve and volume history for Home Assistant, available in HACS.",
   "keywords": [
     "hacs",
     "home-assistant",

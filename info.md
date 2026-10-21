@@ -3,6 +3,9 @@
 A Home Assistant dashboard card for total stored rainwater, usable reserve,
 remaining capacity, daily change, and volume history.
 
+Available directly in the default HACS catalogue. Search for **Rainwater Card**
+in HACS; no custom repository is needed.
+
 ![Rainwater Card preview](docs/rainwater-card-preview.svg)
 
 ## Highlights

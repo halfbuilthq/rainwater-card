@@ -1,5 +1,7 @@
 # Rainwater Card for Home Assistant
 
+[![HACS Default](https://img.shields.io/badge/HACS-Default-41BDF5.svg)](https://github.com/hacs/default)
+
 A single-reservoir dashboard card for total stored rainwater, usable reserve,
 remaining capacity, daily change, and volume history.
 
@@ -16,7 +18,7 @@ remaining capacity, daily change, and volume history.
 - Mouse, touch and keyboard chart inspection with point-in-time tooltips
 - Native Home Assistant visual configuration
 - Responsive light and dark themes
-- HACS-compatible packaging
+- Available in the default HACS catalogue
 
 ## Configuration
 
@@ -32,6 +34,20 @@ show_history: true
 
 Only `entity` is required. `capacity` and `reserve` are numeric values in
 litres, not additional entities.
+
+## HACS installation
+
+The card is available in the default HACS catalogue; no custom repository is needed.
+
+[![Open in HACS](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=halfbuilthq&repository=rainwater-card&category=plugin)
+
+1. Select the button above, or open **HACS** in Home Assistant.
+2. Search for **Rainwater Card**.
+3. Open the card and select **Download**.
+4. Refresh your browser, then add **Rainwater Card** from the dashboard card picker.
+
+For updates, download the latest release when offered in HACS and refresh your
+dashboard. HACS may take time to discover a newly published release.
 
 ## Development
 
