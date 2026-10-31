@@ -759,6 +759,14 @@ const he = Pt`
     gap: 13px;
   }
 
+  .title-group > div:last-child {
+    min-width: 0;
+  }
+
+  .summary {
+    min-width: 0;
+  }
+
   .icon-tile {
     display: grid;
     width: 46px;
@@ -1206,7 +1214,7 @@ const he = Pt`
     color: var(--rainwater-aqua);
   }
 
-  @container (max-width: 430px) {
+  @container (max-width: 480px) {
     .header {
       align-items: flex-start;
     }
