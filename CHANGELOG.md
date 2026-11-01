@@ -5,6 +5,13 @@ Semantic Versioning.
 
 ## [Unreleased]
 
+## [0.1.3] - 2026-11-01
+
+### Fixed
+
+- Keep the tank summary inside its panel near the compact layout breakpoint.
+- Truncate long card titles within their available space so they cannot cover the status badge.
+
 ## [0.1.2] - 2026-09-02
 
 ### Added
